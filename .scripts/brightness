@@ -1,0 +1,48 @@
+#!/bin/sh
+
+export BOLD="$(tput bold)"
+export GREEN="$(tput setaf 2)"
+export RESET="$(tput sgr0)"
+
+brightness () {
+  cat <<EOF
+
+    █▄▄ █▀█ ▀ █▀▀ █ █ ▀█▀ █▀▄ █▀█ █▀ █▀ 
+    █▄█ █   █ █▄█ █▀█  █  █ █ █▄▄ ▄█ ▄█ 
+ 
+    brightness ${GREEN}up${RESET}            - turn up by 5%
+    brightness ${GREEN}down${RESET}          - turn down by 5%
+    brightness ${GREEN}on${RESET}            - turn on
+    brightness ${GREEN}off${RESET}           - turn off
+
+EOF
+}
+
+if [ "$1" = "up" ]; then
+  echo "hey"
+  # URRENT_BRIGHTNESS="xrandr --verbose | awk '/Brightness/ { print $2; exit }'"
+  # xrandr --output eDP-1 --brightness ${CURRENT_BRIGHTNESS}+0.05
+  exit 0
+fi
+
+if [ "$1" = "down" ]; then
+  echo "heyq"
+  # CURRENT_BRIGHTNESS="xrandr --verbose | awk '/Brightness/ { print $2; exit }'"
+  # xrandr --output eDP-1 --brightness ${CURRENT_BRIGHTNESS}-0.05
+  exit 0
+fi
+
+if [ "$1" = "on" ]; then
+  echo "heyqwf"
+  # xrandr --output eDP-1 --brightness 1
+  exit 0
+fi
+
+if [ "$1" = "off" ]; then
+  echo "heqwfqwfy"
+  # xrandr --output eDP-1 --brightness 0
+  exit 0
+fi
+
+brightness
+exit 1

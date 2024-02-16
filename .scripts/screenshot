@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Config
+FOLDER="${HOME}/Pictures/screenshots/"
+DATE=$(date +%F)
+TIME=$(date +%I-%M-%S)
+FILENAME="$FOLDER/screenshot-$DATE-at-$TIME.jpg"
+
+# Create directory
+[ -d "$FOLDER" ] || mkdir --parents "$FOLDER"
+
+# Take and save screenshot
+ffmpeg -y -f x11grab -video_size 3000x2000  -i :0.0 -vframes 1 "$FILENAME" 2>/dev/null
+
+echo "Screenshot taken"
+exit 1

@@ -1,0 +1,65 @@
+#!/bin/sh
+
+HOST="$(hostname)"
+OS='Neckbeard'
+KERNEL="$(uname -sr)"
+UPTIME="$(uptime -p | sed 's/up //')"
+PACKAGES="$(dpkg -l | wc -l)"
+SHELL="$(basename ${SHELL})"
+
+CPU="$(awk -F':' '/^model name/ {split($2, A, " @"); print A[1]; exit}' /proc/cpuinfo)"
+GPU="$(lspci | grep -i vga | awk -F ": " '{print $2}')"
+#MHZ="$(awk -F':' '/cpu MHz/{ print int($2+.5) }' /proc/cpuinfo | head -n 1)"
+#GHZ="$(awk '{print $1/1000}' <<< "${MHZ}")"
+
+#mem=$(free -b | awk -F ':' 'NR==2{print $2}' | awk '{print $1"-"$6}')
+#usedmem=$((mem / 1024 / 1024))
+#totalmem=$((${mem//-*} / 1024 / 1024))
+
+# ${WHITE}Processor:${PROCESSOR} @ ${GHZ}#GHz${RESET}
+
+# ext=$(code --list-extensions | xargs -L 1 echo code --install-extension)
+# echo "#!/usr/bin/env zsh\n$ext" > vscode.extensions.sh
+
+system () {
+cat <<EOF
+
+    ${WHITE}█▀ █ █ █▀ ▀█▀ █▀█ █▀▄▀█${RESET}
+    ${WHITE}▄█  █  ▄█  █  █▄▄ █ ▀ █${RESET}
+
+    ${WHITE}system${RESET}:${PRIMARY}info${RESET}
+    ${WHITE}system${RESET}:${PRIMARY}shutdown${RESET}
+    ${WHITE}system${RESET}:${PRIMARY}reboot${RESET}
+    ${WHITE}system${RESET}:${PRIMARY}battery${RESET}
+    ${WHITE}system${RESET}:${PRIMARY}empty-trash${RESET}
+
+    ${WHITE}system${RESET}:${PRIMARY}volume${RESET}:${YELLOW}up${RESET}
+    ${WHITE}system${RESET}:${PRIMARY}volume${RESET}:${YELLOW}down${RESET}
+    ${WHITE}system${RESET}:${PRIMARY}volume${RESET}:${YELLOW}mute${RESET} ${GRAY}# coming soon${RESET}
+    ${WHITE}system${RESET}:${PRIMARY}volume${RESET}:${YELLOW}unmute${RESET} ${GRAY}# coming soon${RESET}
+
+EOF
+}
+
+# ${WHITE}GPU:      ${GPU}${RESET}
+
+system_info () {
+cat <<EOF
+
+    ${WHITE}█▀▄ █▀█ █▀ █▄▀ █▄▄ █▀█ ▄▀█ █▀█ █▀▄${RESET}
+    ${WHITE}█ █ █▄▄ █▄ █ █ █▄█ █▄▄ █▀█ █   █▄█${RESET}
+
+    ${PRIMARY}${USER}${RESET}@${WHITE}${HOST}${RESET}
+
+    ${WHITE}OS:        ${OS} @ ${KERNEL}${RESET}
+    ${WHITE}Uptime:    ${UPTIME}${RESET}
+    ${WHITE}Packages:  ${PACKAGES}${RESET}
+    ${WHITE}Shell:     ${SHELL}${RESET}
+    ${WHITE}CPU:       ${CPU}${RESET}
+    ${WHITE}Memory:    ${usedmem}MiB / ${totalmem}MiB${RESET}
+
+EOF
+}
+
+system
+exit 1

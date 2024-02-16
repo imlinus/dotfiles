@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# core
+# - toybox, curl, musl, make and so on
+# extra
+# - ffmpeg, firefox, libpng and so on
+# scripts
+# - screenshot, system-info, file-manager
+
+package () {
+cat <<EOF
+
+    ${WHITE}█▀█ ▄▀█ █▀ █▄▀ ▄▀█ █▀▀ █▀█${RESET}
+    ${WHITE}█▀▀ █▀█ █▄ █ █ █▀█ █▄█ █▄▄${RESET}
+
+    ${WHITE}package${RESET}:${PRIMARY}install${RESET} name
+    ${WHITE}package${RESET}:${PRIMARY}remove${RESET} name
+    ${WHITE}package${RESET}:${PRIMARY}update${RESET}
+    ${WHITE}package${RESET}:${PRIMARY}list${RESET}
+
+EOF
+}
+
+if [ "$1" = "install" ]; then
+  PACKAGE="$2"
+  ARCHIVE_URL="https://packages.imlin.us/$PACKAGE"
+
+  # wget "$ARCHIVE_URL" -q --show-progress --progress=bar:force 2>&1
+  # unzip "$PACKAGE.zip" $PROJECT
+  # rm -rf "$PACKAGE.zip"
+
+  # cd $PACKAGE
+  # make install
+
+  exit 0
+fi
+
+if [ "$1" = "remove" ]; then
+  PACKAGE="$2"
+
+  rm -rf "/packages/$PACKAGE"
+  echo "${GREEN}d${RESET} removed $PACKAGE from system"
+
+  exit 0
+fi
+
+package
+exit 1

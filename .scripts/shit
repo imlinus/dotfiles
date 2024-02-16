@@ -1,0 +1,147 @@
+#!/bin/sh
+
+export USERNAME="imlinus"
+export PASSWORD=""
+export SERVER="https://code.imlin.us"
+
+export BOLD="$(tput bold)"
+export RED="$(tput setaf 1)"
+export GREEN="$(tput setaf 2)"
+export YELLOW="$(tput setaf 3)"
+export RESET="$(tput sgr0)"
+
+export PRIMARY="$(tput setaf 10)"
+
+help () {
+  cat <<EOF
+
+    ${PRIMARY}█▀ █ █ ▀ ▀█▀${RESET}
+    ${PRIMARY}▄█ █▀█ █  █ ${RESET}
+ 
+    shit ${GREEN}new${RESET}           - Start a new shit project
+    shit ${GREEN}backup${RESET} id     - Create a backup of your current code
+    shit ${GREEN}restore${RESET} id    - Restore to old backup
+    shit ${GREEN}upload${RESET}        - Upload project to server
+    shit ${GREEN}download${RESET} name - Download project from server
+
+EOF
+}
+
+if [ "$1" = "new" ]; then
+  echo ""
+  echo " Creating new shit project"
+  test -d ".shit" || mkdir ".shit"
+
+  echo " Name:"
+  read name
+
+  echo " Description:"
+  read description
+
+  echo " Group (linux, javascript, service, misc):"
+  read group
+
+  # create config file
+  echo "name:$name" >> ".shit/config"
+  echo "description:$description" >> ".shit/config"
+  echo "group:$group" >> ".shit/config"
+
+  echo " ${GREEN}✔${RESET} Created project ${name}"
+
+  exit 0
+fi
+
+if [ "$1" = "backup" ]; then
+  current_folder=$(pwd)
+  project_name=$(basename "$PWD")
+  temporary_folder="${HOME}/.backup"
+  backup_name=${2}
+
+  echo " Creating backup ${backup_name}"
+  test -d ".shit/${backup_name}.zip"
+
+  if [ "$?" -eq 0 ]; then
+    echo " Backup ${backup_name} already exists"
+    exit 1
+  fi
+ 
+  # copy current folder to temporary for modifications
+  test -d $temporary_folder && rm -rf $temporary_folder
+  cp -r $current_folder $temporary_folder
+  
+  # remove old backups from temporary folder
+  rm -rf "${temporary_folder}/.shit/"
+
+  cd $temporary_folder
+  zip -r "../${backup_name}.zip" *
+
+  mv "../${backup_name}.zip" "${current_folder}/.shit/${backup_name}.zip"
+  rm -rf $temporary_folder
+
+  echo " ${GREEN}✔${RESET} Created backup with ID ${2}"
+  exit 0
+fi
+
+if [ "$1" = "restore" ]; then
+  current_folder=$(pwd)
+  backup_name=${2}
+
+  echo "Restoring to backup ${backup_name}"
+  test ".shit/${backup_name}.zip"
+
+  if [ "$?" -ne 0 ]; then
+    echo "Could not find backup ${backup_name}"
+    exit 1
+  fi
+
+
+  rmf=$(ls -A | grep -v '.shit')
+  if [ "$rmf" != "" ]; then
+    rm -r $(ls -A | grep -v '.shit')
+  fi
+
+  unzip ".shit/${backup_name}.zip" -d ${current_folder}
+
+  echo " ${GREEN}✔${RESET} Restored to ${backup_name}"
+
+  exit 0    
+fi
+
+if [ "$1" = "upload" ]; then
+  folder_name=$(basename $(pwd))
+  folder_path=$(pwd)
+
+  # compress project
+  cd ..
+  zip -r "${folder_name}.zip" "${folder_name}"
+
+  # upload to server
+  curl -s --user ${USERNAME}:${PASSWORD} -F "project=@${folder_name}.zip" ${SERVER}
+  #  > /dev/null
+
+  # cleanup after ourselves
+  rm -rf "${folder_name}.zip"
+
+  ls
+  # echo " ${GREEN}✔${RESET} Uploaded ${project_name}"
+  exit 0
+fi
+
+if [ "$1" = "download" ]; then
+  project_name=${2}
+
+  # fetch compressed project from server
+  curl -L ${SERVER}/projects/${project_name}.zip -o ${project_name}.zip > /dev/null 2>&1
+
+  # extract files
+  unzip -qq "${project_name}.zip"
+
+  # remove archive
+  rm -rf "${project_name}.zip"
+
+  echo " ${GREEN}✔${RESET} Downloaded ${project_name}"
+  exit 0
+fi
+
+help
+exit 1

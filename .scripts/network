@@ -1,0 +1,23 @@
+#!/bin/sh
+
+network () {
+cat <<EOF
+
+    ${WHITE}█▀▄ █▀█ ▀█▀ █ █ █ █▀█ █▀█ █▄▀${RESET}
+    ${WHITE}█ █ █▄▄  █  █▄▀▄█ █▄█ █   █ █${RESET}
+
+    ${WHITE}network${RESET}:${PRIMARY}ping${RESET}
+    ${WHITE}network${RESET}:${PRIMARY}ip${RESET}
+    ${WHITE}network${RESET}:${PRIMARY}randomize-mac${RESET}
+
+    ${WHITE}network${RESET}:${PRIMARY}vpn${RESET}:${YELLOW}on${RESET}  ${GRAY}# coming soon${RESET}
+    ${WHITE}network${RESET}:${PRIMARY}vpn${RESET}:${YELLOW}off${RESET} ${GRAY}# coming soon${RESET}
+
+    ${WHITE}network${RESET}:${PRIMARY}tor${RESET}:${YELLOW}on${RESET}  ${GRAY}# coming soon${RESET}
+    ${WHITE}network${RESET}:${PRIMARY}tor${RESET}:${YELLOW}off${RESET} ${GRAY}# coming soon${RESET}
+
+EOF
+}
+
+network
+exit 1

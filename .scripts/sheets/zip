@@ -1,0 +1,29 @@
+#!/bin/sh
+
+export WHITE="$(tput setaf 250)"
+export GRAY="$(tput setaf 240)"
+export RESET="$(tput sgr0)"
+
+zip () {
+cat <<EOF
+
+    ${WHITE}▀█ ▀ █▀█${RESET}
+    ${WHITE}█▄ █ █▀▀${RESET}
+
+    ${GRAY}# compress a file${RESET}
+    zip name.zip file1 optional-output-folder/
+  
+    ${GRAY}# compress a folder${RESET}
+    zip -r archive.zip folder/
+  
+    ${GRAY}# compress with password${RESET}
+    zip -P password archive.zip file1
+
+    ${GRAY}# inspect archive${RESET}
+    zip -sf archive.zip
+
+EOF
+}
+
+zip
+exit 1

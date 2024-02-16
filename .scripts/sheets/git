@@ -1,0 +1,17 @@
+#!/bin/sh
+
+git () {
+  cat <<EOF
+  █▀▀ ▀ ▀█▀
+  █▄█ █  █
+
+  # Create new branch & switch to it
+  git checkout -b new-branch
+  
+  # Undo last commit
+  git reset --soft HEAD~1
+EOF
+}
+
+help
+exit 1

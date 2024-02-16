@@ -1,0 +1,20 @@
+#!/bin/sh
+
+tools () {
+cat <<EOF
+
+    ${WHITE}▀█▀ █▀█ █▀█ █  █▀${RESET}
+    ${WHITE} █  █▄█ █▄█ █▄ ▄█${RESET}
+
+    list
+    tree
+    copy
+    rename
+    remove
+    preview
+
+EOF
+}
+
+tools
+exit 1

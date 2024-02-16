@@ -1,0 +1,37 @@
+#!/bin/sh
+
+HOST="$(hostname)"
+OS='Neckbeard OS'
+KERNEL="$(uname -sr)"
+UPTIME="$(uptime -p | sed 's/up //')"
+PACKAGES="$(dpkg -l | wc -l)"
+SHELL="$(basename ${SHELL})"
+
+CPU="$(awk -F':' '/^model name/ {split($2, A, " @"); print A[1]; exit}' /proc/cpuinfo)"
+GPU="$(lspci | grep -i vga | awk -F ": " '{print $2}')"
+#MHZ="$(awk -F':' '/cpu MHz/{ print int($2+.5) }' /proc/cpuinfo | head -n 1)"
+#GHZ="$(awk '{print $1/1000}' <<< "${MHZ}")"
+
+# mem=$(free -b | awk -F ':' 'NR==2{print $2}' | awk '{print $1"-"$6}')
+# usedmem=$((mem / 1024 / 1024))
+# totalmem=$((${mem//-*} / 1024 / 1024))
+# ${WHITE}Memory:    ${usedmem}MiB / ${totalmem}MiB${RESET}
+
+system_info () {
+cat <<EOF
+
+    ${WHITE}█▀▄ █▀█ █▀ █▄▀ █▄▄ █▀█ ▄▀█ █▀█ █▀▄${RESET}
+    ${WHITE}█ █ █▄▄ █▄ █ █ █▄█ █▄▄ █▀█ █   █▄█${RESET}
+
+    ${WHITE}User:      ${RESET}${PRIMARY}${USER}${RESET}@${WHITE}${HOST}${RESET}
+    ${WHITE}OS:        ${OS} @ ${KERNEL}${RESET}
+    ${WHITE}Uptime:    ${UPTIME}${RESET}
+    ${WHITE}Packages:  ${PACKAGES}${RESET}
+    ${WHITE}Shell:     ${SHELL}${RESET}
+    ${WHITE}CPU:      ${CPU}${RESET}
+
+EOF
+}
+
+system_info
+exit 1

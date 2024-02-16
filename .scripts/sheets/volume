@@ -1,0 +1,27 @@
+#!/bin/sh
+
+export WHITE="$(tput setaf 250)"
+export GRAY="$(tput setaf 240)"
+export RESET="$(tput sgr0)"
+
+
+volume () {
+  cat <<EOF
+
+    ${WHITE}█ █ █▀█ █  █ █ █▀▄▀█ █▀█${RESET}
+    ${WHITE}▀▄▀ █▄█ █▄ █▄█ █ ▀ █ █▄▄${RESET}
+
+    ${GRAY}# toggle on/off${RESET}
+    amixer set Capture toggle
+
+    ${GRAY}# increase volume by 5%${RESET}
+    amixer set Capture 5%+
+
+    ${GRAY}# decrease volume by 5%${RESET}
+    amixer set Capture 5%-
+
+EOF
+}
+
+volume
+exit 1

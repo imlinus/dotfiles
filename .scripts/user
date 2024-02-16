@@ -1,0 +1,15 @@
+#!/bin/sh
+
+user () {
+cat <<EOF
+
+    ${WHITE}█ █ █▀ █▀█ █▀█${RESET}
+    ${WHITE}█▄█ ▄█ █▄▄ █  ${RESET}
+
+    user:logout
+
+EOF
+}
+
+user
+exit 1

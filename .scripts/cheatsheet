@@ -1,0 +1,29 @@
+#!/bin/sh
+
+export WHITE="$(tput setaf 15)"
+export GRAY="$(tput setaf 7)"
+export RESET="$(tput sgr0)"
+
+cheatsheet () {
+  cat <<EOF
+
+    ${WHITE}█▀▀ █ █ █▀█ ▄▀█ ▀█▀ █▀ █ █ █▀█ █▀█ ▀█▀${RESET}
+    ${WHITE}█▄▄ █▀█ █▄▄ █▀█  █  ▄█ █▀█ █▄▄ █▄▄  █ ${RESET}
+
+    E.g. cheatsheet zip
+
+EOF
+}
+
+if [ "$1" ]; then
+  if [ "${HOME}/.scripts/sheets/$1" ]; then
+    . "${HOME}/.scripts/sheets/$1"
+  fi
+
+  exit 1
+fi
+
+if [ -z "$1" ]; then
+  cheatsheet
+  exit 1
+fi

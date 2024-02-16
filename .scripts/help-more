@@ -1,0 +1,19 @@
+#!/bin/sh
+
+help_more () {
+cat <<EOF
+
+    ${WHITE}█ █ █▀█ █  █▀█${RESET}
+    ${WHITE}█▀█ █▄▄ █▄ █▀▀${RESET}
+
+    ${WHITE}hello${RESET}            ${GRAY}# hello :)${RESET}
+    ${WHITE}fuck${RESET}             ${GRAY}# repeat last command with priveledges${RESET}
+    ${WHITE}screenshot${RESET}       ${GRAY}# take screenshot of entire screen${RESET}
+    ${WHITE}weather${RESET}          ${GRAY}# get latest weather information${RESET}
+    ${WHITE}ascii${RESET}:${PRIMARY}text${RESET} ${YELLOW}name${RESET}  ${GRAY}# create ascii text${RESET}
+
+EOF
+}
+
+help_more
+exit 1
