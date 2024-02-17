@@ -11,6 +11,7 @@ cheatsheet () {
     ${WHITE}█▄▄ █▀█ █▄▄ █▀█  █  ▄█ █▀█ █▄▄ █▄▄  █ ${RESET}
 
     E.g. cheatsheet zip
+    bluetooth, docker, git, volume, zip
 
 EOF
 }

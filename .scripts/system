@@ -35,7 +35,7 @@ cat <<EOF
 
     ${WHITE}system${RESET}:${PRIMARY}volume${RESET}:${YELLOW}up${RESET}
     ${WHITE}system${RESET}:${PRIMARY}volume${RESET}:${YELLOW}down${RESET}
-    ${WHITE}system${RESET}:${PRIMARY}volume${RESET}:${YELLOW}mute${RESET} ${GRAY}# coming soon${RESET}
+    ${WHITE}system${RESET}:${PRIMARY}volume${RESET}:${YELLOW}mute${RESET}   ${GRAY}# coming soon${RESET}
     ${WHITE}system${RESET}:${PRIMARY}volume${RESET}:${YELLOW}unmute${RESET} ${GRAY}# coming soon${RESET}
 
 EOF

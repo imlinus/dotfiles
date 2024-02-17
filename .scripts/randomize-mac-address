@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Spoof MAC address to circumvent most timeout-based freemium internet providers in airports, hotels, cafes, etc.
+# Spoof works by changing your computer’s MAC address so it is recognised as a new internet service user by the internet provider.
+
+OLD_MAC_ADDRESS="ifconfig wlp4s0 |grep ether | grep -oE [0-9abcdef:]{17}"
+NEW_MAC_ADDRESS="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
+
+echo Old MAC Address: $OLD_MAC_ADDRESS
+
+sudo ifconfig wlp4s0 ether $NEW_MAC_ADDRESS
+
+echo MAC address successfully changed
+echo New MAC Address: $NEW_MAC_ADDRESS
