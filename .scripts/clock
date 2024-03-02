@@ -1,0 +1,87 @@
+# █▀█ ▄▀█ ▀▀█ ▀▀█ █ █ █▀▀ █▀▀ ▀▀█ █▀█ █▀█ ▄
+# █ █   █ █▀▀ ▀▀█ █▄█ ▀▀█ █▀█  █  █▀█ █▄█
+# █▄█   █ █▄▄ ▄▄█   █ ▄▄█ █▄█  █  █▄█ ▄▄█ ▀
+
+#!/bin/sh
+
+CHARACTERS="
+01:█▀█
+02:█ █
+03:█▄█
+
+11:▄▀█
+12:  █
+13:  █
+
+21:▀▀█
+22:█▀▀
+23:█▄▄
+
+31:▀▀█
+32:▀▀█
+33:▄▄█
+
+41:█ █
+42:█▄█
+43:  █
+
+51:█▀▀
+52:▀▀█
+53:▄▄█
+
+61:█▀▀
+62:█▀█
+63:█▄█
+
+71:▀▀█
+72: █ 
+73: █ 
+
+81:█▀█
+82:█▀█
+83:█▄█
+
+91:█▀█
+92:█▄█
+93:▄▄█
+
+c1:▄
+c2: 
+c3:▀
+"
+
+	DATE=$(date +%H:%M)
+	INPUT=$(echo $DATE | tr ':' 'c')
+	LINE1=""
+	LINE2=""
+	LINE3=""
+
+	while [ ${#INPUT} -gt 0 ]; do
+    NEXT=${INPUT#?}
+
+    for INDEX in 1 2 3; do
+      CHARACTER="${INPUT%$NEXT}${INDEX}"
+      OUTPUT=$(echo "$CHARACTERS" | grep $CHARACTER | cut -d: -f2)
+
+      if [ "$INDEX" -eq 1 ]; then
+      	LINE1="${LINE1}${OUTPUT} "
+      fi
+
+      if [ "$INDEX" -eq 2 ]; then
+        LINE2="${LINE2}${OUTPUT} "
+      fi
+
+	  if [ "$INDEX" -eq 3 ]; then
+        LINE3="${LINE3}${OUTPUT} "
+      fi
+    done
+
+    INPUT=$NEXT
+  done
+
+cat <<EOF
+${LINE1}
+${LINE2}
+${LINE3}
+EOF
+
