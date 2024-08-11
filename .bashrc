@@ -33,6 +33,7 @@ alias move="mv -i"
 alias rename="mv"
 alias remove="rm -rfi"
 alias preview="cat"
+alias folder:size="du -hs * | sort -h"
 # alias locate='"$(pwd -P)" -name "$1"'
 
 # Im that lazy
